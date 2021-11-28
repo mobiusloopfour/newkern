@@ -1,0 +1,92 @@
+TOPDIR = $(shell pwd)
+ARCH = i686
+FORMAT = elf
+NAME = sys
+KERNDIRS = kern arch/$(ARCH) libc
+SUBDIRS = $(KERNDIRS)
+PREFIX = $(ARCH)-$(FORMAT)
+
+# redundancy
+CC_FOR_TARGET = $(PREFIX)-@GCC_FOR_TARGET@
+
+CXX_FOR_TARGET = $(PREFIX)-@CXX_FOR_TARGET@
+GCC_FOR_TARGET = $(PREFIX)-@GCC_FOR_TARGET@
+CPP_FOR_TARGET = $(PREFIX)-@CPP_FOR_TARGET@
+AR_FOR_TARGET = $(PREFIX)-@AR_FOR_TARGET@
+AS_FOR_TARGET = $(PREFIX)-@AS_FOR_TARGET@
+LD_FOR_TARGET = $(PREFIX)-@LD_FOR_TARGET@
+NM_FOR_TARGET = $(PREFIX)-@NM_FOR_TARGET@
+OBJDUMP_FOR_TARGET = $(PREFIX)-@OBJDUMP_FOR_TARGET@
+OBJCOPY_FOR_TARGET = $(PREFIX)-@OBJCOPY_FOR_TARGET@
+RANLIB_FOR_TARGET = $(PREFIX)-@RANLIB_FOR_TARGET@
+STRIP_FOR_TARGET = $(PREFIX)-@STRIP_FOR_TARGET@
+READELF_FOR_TARGET = $(PREFIX)-@READELF_FOR_TARGET@
+NASM = nasm
+
+NASMFLAGS = -felf32 -g
+INCLUDE = -I$(TOPDIR)/$(ARCH) -I$(TOPDIR) -I$(TOPDIR)/stdinclude
+# Compiler options for final code
+CFLAGS = -g -m32 -march=i586 -Wall -O2 -fno-builtin -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc $(INCLUDE) -fno-stack-protector
+CFLAGS += -mno-red-zone -fleading-underscore -ffreestanding -ansi -Wno-unused-function
+
+AR = ar
+ARFLAGS = rsv
+RM = rm -rf
+LDFLAGS = -T link.ld -z max-page-size=4096 --defsym __BUILD_DATE=$(shell date +'%Y%m%d') --defsym __BUILD_TIME=$(shell date +'%H%M%S')
+STRIP_DEBUG = --strip-debug
+KEEP_DEBUG = --only-keep-debug
+
+# Prettify output
+V = 0
+ifeq ($V,0)
+	Q = @
+	P = > /dev/null
+endif
+
+default: all
+
+all: $(NAME).elf
+
+$(NAME).elf:
+	$Q$(LD_FOR_TARGET) $(LDFLAGS) -o $(NAME).elf $^
+	@echo [OBJCOPY] $(NAME).sym
+	$Q$(OBJCOPY_FOR_TARGET) $(KEEP_DEBUG) $(NAME).elf $(NAME).sym
+	@echo [OBJCOPY] $(NAME).elf
+	$Q$(OBJCOPY_FOR_TARGET) $(STRIP_DEBUG) $(NAME).elf
+	@echo [OBJDUMP] $(NAME).dmp
+	$Q$(OBJDUMP_FOR_TARGET) -S $(NAME).elf >> ./$(NAME).dmp
+
+clean:
+	$Q$(RM) $(NAME).elf $(NAME).sym *~
+	@echo Cleaned.
+
+veryclean: clean
+	$Q$(RM) qemu-vlan0.pcap
+	@echo Very cleaned
+
+qemu: $(NAME).elf
+	qemu-system-i386 -monitor stdio -smp 2 -net nic,model=rtl8139 -net user,hostfwd=tcp::12345-:7  -kernel $(NAME).elf
+
+qemu-dbg: $(NAME).elf
+	qemu-system-i386 -monitor stdio -s -S -smp 2 -net nic,model=rtl8139 -net user,hostfwd=tcp::12345-:7 -kernel $(NAME).elf
+
+test:
+	@echo "Nothing to test"
+
+%.o : %.c
+	@echo [CC] $@
+	$Q$(CC_FOR_TARGET) -c -D__KERNEL__ $(CFLAGS) -o $@ $<
+	@echo [DEP] $*.dep
+	$Q$(CC_FOR_TARGET) -MF $*.dep -MT $*.o -MM $(CFLAGS) $<
+
+%.o : %.asm
+	@echo [ASM] $@
+	$Q$(NASM) $(NASMFLAGS) -o $@ $<
+
+%.o : %.S
+	@echo [GCC-ASM] $@
+	$Q$(CC_FOR_TARGET) $(CFLAGS) -c -o $@ $<
+
+.PHONY: default all clean emu gdb newlib tools test
+ 
+include $(addsuffix /Makefile,$(SUBDIRS))

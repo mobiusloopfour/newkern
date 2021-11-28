@@ -1,0 +1,13 @@
+*.o
+*.dep
+*~
+*.elf
+*.sym
+*.dmp
+config.log
+config.status
+Makefile
+sys/config.h
+.DS_Store
+*.json
+man/html
