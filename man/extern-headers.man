@@ -1,0 +1,9 @@
+.TH EXTERN-HEADERS 1 "28 Nov 2021"
+.SH EXTERN-HEADERS
+/extern-headers \- Third-party headers.
+.SH DESCRIPTION
+`extern-headers' holds non-newkern header files (mostly from LLVM or GNU projects).
+The reason for this separation is licensing.
+.SS Currently under development:
+.TP
+\fBnot applicable\fP

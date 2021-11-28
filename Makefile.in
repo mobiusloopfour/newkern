@@ -76,6 +76,15 @@ help-compilation:
 help-general:
 	groff -Tascii -man man/general.man | more
 
+help-arch:
+	groff -Tascii -man man/arch.man | more
+
+help-extern-headers:
+	groff -Tascii -man man/extern-headers.man | more
+
+help-hal:
+	groff -Tascii -man man/hal.man | more
+
 test:
 	@echo "Nothing to test"
 

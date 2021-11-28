@@ -8,3 +8,5 @@ can be any of the following:
 
 - compilation
 - general
+
+Most directories have a manpage as well.

@@ -14,6 +14,9 @@ AS_IF([test x"$CROSS_CHECK" != x"yes"], [AC_MSG_ERROR([Please set up a cross com
 AC_CHECK_PROG(CROSS_CHECK_BINUTILS, [i686-elf-ld i686-elf-none-ld], yes)
 AS_IF([test x"$CROSS_CHECK_BINUTILS" != x"yes"], [AC_MSG_ERROR([Please set up a cross compiler before configuring. (Didn't find i686 binutils)])])
 
+AC_CHECK_PROG(MANGEN, [groff troff roff], yes)
+AS_IF([test x"$MANGEN" != x"yes"], [AC_MSG_ERROR([Please install groff])])
+
 # Find the build, host, and target systems.
 ACX_NONCANONICAL_BUILD
 ACX_NONCANONICAL_HOST

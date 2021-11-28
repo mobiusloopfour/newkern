@@ -1,0 +1,12 @@
+.TH HAL 1 "28 Nov 2021"
+.SH HAL
+/arch \- Architecture specific initialization code.
+.SH DESCRIPTION
+`hal' holds platform specific runtime code.
+The HAL will eventually be swappable from the stock one,
+to make porting easier.
+.SS Currently under development:
+.TP
+\fBDescriptor and interrupt vector tables\fP
+.SH "SEE ALSO"
+wiki.osdev.org

@@ -1,0 +1,11 @@
+.TH ARCH 1 "28 Nov 2021"
+.SH ARCH
+/arch \- Architecture specific initialization code.
+.SH DESCRIPTION
+`arch' holds architecture specific initialization code, that felt
+innapropriate to include in the stock HAL.
+.SS Currently under development:
+.TP
+\fBCPU initialization\fP
+.SH "SEE ALSO"
+wiki.osdev.org

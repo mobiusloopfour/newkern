@@ -703,6 +703,7 @@ build_os
 build_vendor
 build_cpu
 build
+MANGEN
 CROSS_CHECK_BINUTILS
 CROSS_CHECK
 target_alias
@@ -2914,6 +2915,53 @@ fi
 if test x"$CROSS_CHECK_BINUTILS" != x"yes"
 then :
   as_fn_error $? "Please set up a cross compiler before configuring. (Didn't find i686 binutils)" "$LINENO" 5
+fi
+
+# Extract the first word of "groff troff roff", so it can be a program name with args.
+set dummy groff troff roff; ac_word=$2
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+printf %s "checking for $ac_word... " >&6; }
+if test ${ac_cv_prog_MANGEN+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test -n "$MANGEN"; then
+  ac_cv_prog_MANGEN="$MANGEN" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  case $as_dir in #(((
+    '') as_dir=./ ;;
+    */) ;;
+    *) as_dir=$as_dir/ ;;
+  esac
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
+    ac_cv_prog_MANGEN="yes"
+    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+MANGEN=$ac_cv_prog_MANGEN
+if test -n "$MANGEN"; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $MANGEN" >&5
+printf "%s\n" "$MANGEN" >&6; }
+else
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+fi
+
+
+if test x"$MANGEN" != x"yes"
+then :
+  as_fn_error $? "Please install groff" "$LINENO" 5
 fi
 
 # Find the build, host, and target systems.
