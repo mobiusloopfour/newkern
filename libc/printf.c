@@ -10,11 +10,11 @@ int
 putchar (int ic)
 {
     char c = (char)ic;
-    terminal_write (&c, sizeof (c));
+    ttyw (&c, sizeof (c));
     return ic;
 }
 
-static BOOL
+static bool_t
 print (const char *data, size_t length)
 {
     size_t i;
@@ -22,6 +22,7 @@ print (const char *data, size_t length)
     for (i = 0; i < length; i++)
         if (putchar (bytes[i]) == EOF)
             return FALSE;
+
     return TRUE;
 }
 

@@ -13,3 +13,4 @@ sys/config.h
 man/html
 .cache
 autom4te.cache
+.vscode

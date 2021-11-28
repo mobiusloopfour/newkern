@@ -5,44 +5,52 @@ static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
 static uint16_t *const VGA_MEMORY = (uint16_t *)0xB8000;
 
-static size_t terminal_row;
-static size_t terminal_column;
-static uint8_t terminal_color;
-static uint16_t *terminal_buffer;
+static size_t ttyrow;
+static size_t ttycol;
+static uint8_t ttyclr;
+static uint16_t *ttybuf;
 
+/* Init terminal
+ */
 void
-terminal_initialize (void)
+ttyini (void)
 {
-    terminal_row = 0;
-    terminal_column = 0;
-    terminal_color = vga_entry_color (VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
-    terminal_buffer = VGA_MEMORY;
+    ttyrow = 0;
+    ttycol = 0;
+    ttyclr = ttymkc (VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
+    ttybuf = VGA_MEMORY;
     size_t y, x;
     for (y = 0; y < VGA_HEIGHT; y++)
         {
             for (x = 0; x < VGA_WIDTH; x++)
                 {
                     const size_t index = y * VGA_WIDTH + x;
-                    terminal_buffer[index] = vga_entry (' ', terminal_color);
+                    ttybuf[index] = vga_entry (' ', ttyclr);
                 }
         }
 }
 
+/* Set terminal color
+ */
 void
-terminal_setcolor (uint8_t color)
+ttysetc (uint8_t color)
 {
-    terminal_color = color;
+    ttyclr = color;
 }
 
+/* Entry at x, y
+ */
 void
-terminal_putentryat (unsigned char c, uint8_t color, size_t x, size_t y)
+ttyeat (unsigned char c, uint8_t color, size_t x, size_t y)
 {
     const size_t index = y * VGA_WIDTH + x;
-    terminal_buffer[index] = vga_entry (c, color);
+    ttybuf[index] = vga_entry (c, color);
 }
 
+/* Scroll
+ */
 void
-terminal_scroll (int line)
+ttyscl (int line)
 {
     int loop;
     char c;
@@ -54,8 +62,10 @@ terminal_scroll (int line)
         }
 }
 
+/* Delete last line
+ */
 void
-terminal_delete_last_line ()
+ttydll ()
 {
     int x, *ptr;
 
@@ -66,38 +76,51 @@ terminal_delete_last_line ()
         }
 }
 
+/* Put character
+ */
 void
-terminal_putchar (char c)
+ttyputc (char c)
 {
     int line;
     unsigned char uc = c;
 
-    terminal_putentryat (uc, terminal_color, terminal_column, terminal_row);
-    if (++terminal_column == VGA_WIDTH)
+    if (c == '\n' || c == '\r')
         {
-            terminal_column = 0;
-            if (++terminal_row == VGA_HEIGHT)
+            ttyrow++;
+            ttycol = 0;
+            return;
+        }
+
+    ttyeat (uc, ttyclr, ttycol, ttyrow);
+    if (++ttycol == VGA_WIDTH)
+        {
+            ttycol = 0;
+            if (++ttyrow == VGA_HEIGHT)
                 {
                     for (line = 1; line <= VGA_HEIGHT - 1; line++)
                         {
-                            terminal_scroll (line);
+                            ttyscl (line);
                         }
-                    terminal_delete_last_line ();
-                    terminal_row = VGA_HEIGHT - 1;
+                    ttydll ();
+                    ttyrow = VGA_HEIGHT - 1;
                 }
         }
 }
 
+/* Write to terminal
+ */
 void
-terminal_write (const char *data, size_t size)
+ttyw (const char *data, size_t size)
 {
     size_t i;
     for (i = 0; i < size; i++)
-        terminal_putchar (data[i]);
+        ttyputc (data[i]);
 }
 
+/* Write string to terminal
+ */
 void
-terminal_writestring (const char *data)
+ttystr (const char *data)
 {
-    terminal_write (data, strlen (data));
+    ttyw (data, strlen (data));
 }

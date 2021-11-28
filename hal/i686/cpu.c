@@ -1,8 +1,11 @@
 #include "gdt.h"
+#include "idt.h"
+#include <hal/cpuid.h>
 
-DWORD 
-HLCPUInit ()
+uint32_t 
+cpuini ()
 {
-    HLGDTInit ();
+    gdtini ();
+    idtini (0x8);
     return 0;
 }

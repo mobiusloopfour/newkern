@@ -1,9 +1,9 @@
 #include <hal/hal.h>
 #include "cpu.h"
 
-NKAPI WORD 
-HLInit ()
+NKAPI uint16_t 
+halini ()
 {
-    HLCPUInit ();
+    cpuini ();
     return 0;
 }

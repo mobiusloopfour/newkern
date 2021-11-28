@@ -27,8 +27,8 @@ NASMFLAGS = -felf32 -g
 INCLUDE = -I$(TOPDIR)/$(ARCH) -I$(TOPDIR) -I$(TOPDIR)/stdinclude
 # Compiler options for final code
 CFLAGS = -g -m32 -march=i586 -Wall -O2 -fno-builtin -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc $(INCLUDE) -fno-stack-protector
-CFLAGS += -mno-red-zone -fleading-underscore -ffreestanding -ansi -Wno-unused-function -fms-extensions
-
+CFLAGS += -mno-red-zone -fleading-underscore -ffreestanding -std=gnu99 -Wno-unused-function -fms-extensions -Wall -pedantic -Werror -D__i386__ -D__i686__
+CFLAGS += -Wno-pointer-to-int-cast
 AR = ar
 ARFLAGS = rsv
 RM = rm -rf
@@ -91,7 +91,7 @@ test:
 
 %.o : %.S
 	@echo [GCC-ASM] $@
-	$Q$(CC_FOR_TARGET) $(CFLAGS) -c -o $@ $<
+	$Q$(CC_FOR_TARGET) $(CFLAGS) -D_ASSEMBLER_ -c -o $@ $<
 
 .PHONY: default all clean emu gdb newlib tools test man
  

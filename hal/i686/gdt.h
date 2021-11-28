@@ -5,19 +5,23 @@
 
 #define MAX_DESCRIPTORS 3
 
-struct i686__HLGDTDescriptor {
-    WORD m_Limit;
-    WORD m_BaseLow;
-    BYTE m_BaseMid;
-    BYTE m_Flags;
-    BYTE m_Grand;
-    BYTE m_BaseHigh;
-};
+typedef struct 
+{
+    uint16_t limit;
+    uint16_t baslow;
+    uint8_t basmid;
+    uint8_t flags;
+    uint8_t gran;
+    uint8_t bashi;
+} 
+gdtd_t;
 
-struct i686__HLGDTR {
-    WORD m_Limit;
-    DWORD m_Base;
-};
+typedef struct 
+{
+    uint16_t limit;
+    uint32_t base;
+} 
+gdtr_t;
 
 #pragma pack(pop)
 
@@ -39,4 +43,4 @@ struct i686__HLGDTR {
 /* 4k grandularity. default: none */
 #define I686_GDT_GRAND_4K			    0x80
 
-DWORD HLGDTInit ();
+uint32_t gdtini ();

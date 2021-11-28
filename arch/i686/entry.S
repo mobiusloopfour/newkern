@@ -29,11 +29,11 @@ _start:
 	movl $stack_top, %esp
 
     / Call initializers
-    call EXT_C(init)
+    call EXT_C(kinit)
 	/ Transfer control to the main kernel.
-	call EXT_C(NKMain)
+	call EXT_C(kmain)
 
-	/ Hang if NKMain unexpectedly returns.
+	/ Hang if kmain unexpectedly returns.
 	cli
 1:	hlt
 	jmp 1b

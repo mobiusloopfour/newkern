@@ -1,5 +1,6 @@
 #pragma once
-  
+#include <sys/config.h>
+
 #include <stddef.h>
  
 #ifdef __cplusplus

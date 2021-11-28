@@ -2,4 +2,4 @@
 
 #include <nk/nk32.h>
 
-DWORD HLCPUInit ();
+uint32_t cpuini ();

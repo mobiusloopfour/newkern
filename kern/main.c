@@ -2,13 +2,17 @@
 #include <nk/nk32.h>
 #include <hal/hal.h>
 
-static char str[] = "Yes!";
+#include <locale.h>
+
+extern void idtint ();
 
 int
-NKMain ()
+kmain ()
 {
-    HLInit ();
-    printf (str);
+    halini ();
+    printf (strtab[GDT_LOADED]);
+    asm volatile ("int $10");
+    asm volatile ("int $0");
     while (1)
         ;
 }

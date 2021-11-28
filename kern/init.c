@@ -1,7 +1,7 @@
 #include <sys/tty.h>
 
 void
-init (void)
+kinit (void)
 {
-    terminal_initialize ();
+    ttyini ();
 }
