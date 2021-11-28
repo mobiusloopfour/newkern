@@ -11,3 +11,5 @@ sys/config.h
 .DS_Store
 *.json
 man/html
+.cache
+autom4te.cache
