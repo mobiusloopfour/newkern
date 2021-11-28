@@ -4,6 +4,8 @@
 #include <string.h>
 #include <sys/tty.h>
 
+#include <nk/nk32.h>
+
 int
 putchar (int ic)
 {
@@ -12,7 +14,7 @@ putchar (int ic)
     return ic;
 }
 
-static _Bool
+static BOOL
 print (const char *data, size_t length)
 {
     size_t i;

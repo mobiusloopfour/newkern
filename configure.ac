@@ -8,10 +8,10 @@ AC_CONFIG_HEADERS(sys/config.h)
 
 # simple test
 
-AC_CHECK_PROG(CROSS_CHECK, i686-elf-gcc, yes)
+AC_CHECK_PROG(CROSS_CHECK, [i686-elf-gcc i686-elf-none-gcc], yes)
 AS_IF([test x"$CROSS_CHECK" != x"yes"], [AC_MSG_ERROR([Please set up a cross compiler before configuring. (Didn't find i686 gcc)])])
 
-AC_CHECK_PROG(CROSS_CHECK_BINUTILS, i686-elf-ld, yes)
+AC_CHECK_PROG(CROSS_CHECK_BINUTILS, [i686-elf-ld i686-elf-none-ld], yes)
 AS_IF([test x"$CROSS_CHECK_BINUTILS" != x"yes"], [AC_MSG_ERROR([Please set up a cross compiler before configuring. (Didn't find i686 binutils)])])
 
 # Find the build, host, and target systems.
@@ -20,7 +20,7 @@ ACX_NONCANONICAL_HOST
 ACX_NONCANONICAL_TARGET
 
 # Find the build, host, and target systems.
-AC_CANONICAL_SYSTEM
+AC_CANONICAL_TARGET
 AC_ARG_PROGRAM
 
 m4_pattern_allow([^AS_FOR_TARGET$])dnl

@@ -1,5 +1,8 @@
+#pragma once
+
+#define __i386__ 1
+
 #include <extern-headers/gcc-stddef.h>
 #include <sys/config.h>
-#define TRUE (1)
-#define FALSE (0)
-#define EOF (-1)
+
+#define EOF (-1) 

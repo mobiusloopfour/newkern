@@ -2,7 +2,7 @@ TOPDIR = $(shell pwd)
 ARCH = i686
 FORMAT = elf
 NAME = sys
-KERNDIRS = kern arch/$(ARCH) libc
+KERNDIRS = kern arch/$(ARCH) libc hal/$(ARCH)
 SUBDIRS = $(KERNDIRS)
 PREFIX = $(ARCH)-$(FORMAT)
 
@@ -27,7 +27,7 @@ NASMFLAGS = -felf32 -g
 INCLUDE = -I$(TOPDIR)/$(ARCH) -I$(TOPDIR) -I$(TOPDIR)/stdinclude
 # Compiler options for final code
 CFLAGS = -g -m32 -march=i586 -Wall -O2 -fno-builtin -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc $(INCLUDE) -fno-stack-protector
-CFLAGS += -mno-red-zone -fleading-underscore -ffreestanding -ansi -Wno-unused-function
+CFLAGS += -mno-red-zone -fleading-underscore -ffreestanding -ansi -Wno-unused-function -fms-extensions
 
 AR = ar
 ARFLAGS = rsv

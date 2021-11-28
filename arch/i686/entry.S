@@ -31,9 +31,9 @@ _start:
     / Call initializers
     call EXT_C(init)
 	/ Transfer control to the main kernel.
-	call EXT_C(kernel_main)
+	call EXT_C(NKMain)
 
-	/ Hang if kernel_main unexpectedly returns.
+	/ Hang if NKMain unexpectedly returns.
 	cli
 1:	hlt
 	jmp 1b
