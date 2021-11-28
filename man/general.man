@@ -1,0 +1,12 @@
+.TH GENERAL 1 "28 Nov 2021"
+.SH GENERAL
+General info \- This document gives an overview of the project
+.SH DESCRIPTION
+Work in progress ...
+.SS Subdirectories
+.TP
+\fBarch\fP
+Architecture specific code
+... WIP
+.SH "SEE ALSO"
+wiki.osdev.org

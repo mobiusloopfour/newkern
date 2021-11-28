@@ -1365,14 +1365,14 @@ Fine tuning of the installation directories:
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
   --datarootdir=DIR       read-only arch.-independent data root [PREFIX/share]
   --datadir=DIR           read-only architecture-independent data [DATAROOTDIR]
-  --infodir=DIR           info man [DATAROOTDIR/info]
+  --infodir=DIR           info documentation [DATAROOTDIR/info]
   --localedir=DIR         locale-dependent data [DATAROOTDIR/locale]
-  --mandir=DIR            man man [DATAROOTDIR/man]
-  --docdir=DIR            man root [DATAROOTDIR/doc/kernel]
-  --htmldir=DIR           html man [DOCDIR]
-  --dvidir=DIR            dvi man [DOCDIR]
-  --pdfdir=DIR            pdf man [DOCDIR]
-  --psdir=DIR             ps man [DOCDIR]
+  --mandir=DIR            man documentation [DATAROOTDIR/man]
+  --docdir=DIR            documentation root [DATAROOTDIR/doc/kernel]
+  --htmldir=DIR           html documentation [DOCDIR]
+  --dvidir=DIR            dvi documentation [DOCDIR]
+  --pdfdir=DIR            pdf documentation [DOCDIR]
+  --psdir=DIR             ps documentation [DOCDIR]
 _ACEOF
 
   cat <<\_ACEOF
@@ -2958,6 +2958,7 @@ test -n "$target_alias" &&
   test "$program_prefix$program_suffix$program_transform_name" = \
     NONENONEs,x,x, &&
   program_prefix=${target_alias}-
+
 test "$program_prefix" != NONE &&
   program_transform_name="s&^&$program_prefix&;$program_transform_name"
 # Use a double $ so make ignores it.

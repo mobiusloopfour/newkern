@@ -70,6 +70,12 @@ qemu: $(NAME).elf
 qemu-dbg: $(NAME).elf
 	qemu-system-i386 -monitor stdio -s -S -smp 2 -net nic,model=rtl8139 -net user,hostfwd=tcp::12345-:7 -kernel $(NAME).elf
 
+help-compilation:
+	groff -Tascii -man man/compilation.man | more
+
+help-general:
+	groff -Tascii -man man/general.man | more
+
 test:
 	@echo "Nothing to test"
 
@@ -87,6 +93,6 @@ test:
 	@echo [GCC-ASM] $@
 	$Q$(CC_FOR_TARGET) $(CFLAGS) -c -o $@ $<
 
-.PHONY: default all clean emu gdb newlib tools test
+.PHONY: default all clean emu gdb newlib tools test man
  
 include $(addsuffix /Makefile,$(SUBDIRS))
