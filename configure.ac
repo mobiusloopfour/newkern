@@ -6,6 +6,14 @@ AC_INIT([Kernel],[0.1],[scratch.joint-0i@icloud.com])
 AC_CONFIG_SRCDIR(kern/main.c)
 AC_CONFIG_HEADERS(sys/config.h)
 
+# simple test
+
+AC_CHECK_PROG(CROSS_CHECK, i686-elf-gcc, yes)
+AS_IF([test x"$CROSS_CHECK" != x"yes"], [AC_MSG_ERROR([Please set up a cross compiler before configuring. (Didn't find i686 gcc)])])
+
+AC_CHECK_PROG(CROSS_CHECK_BINUTILS, i686-elf-ld, yes)
+AS_IF([test x"$CROSS_CHECK_BINUTILS" != x"yes"], [AC_MSG_ERROR([Please set up a cross compiler before configuring. (Didn't find i686 binutils)])])
+
 # Find the build, host, and target systems.
 ACX_NONCANONICAL_BUILD
 ACX_NONCANONICAL_HOST
