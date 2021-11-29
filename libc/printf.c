@@ -3,8 +3,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <sys/tty.h>
-
-#include <nk/nk32.h>
+#include <stdint.h>
 
 int
 putchar (int ic)

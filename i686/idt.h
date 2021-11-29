@@ -1,5 +1,6 @@
 #pragma once
-#include <nk/nk32.h>
+
+#include <stdint.h>
 
 #pragma pack(push, 1)
 

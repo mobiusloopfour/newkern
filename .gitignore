@@ -1,12 +1,13 @@
 *.o
 *.dep
 *~
-*.elf
+sys_kern
 *.sym
 *.dmp
 config.log
 config.status
 Makefile
+Makefile.in
 sys/config.h
 .DS_Store
 *.json
@@ -14,3 +15,4 @@ man/html
 .cache
 autom4te.cache
 .vscode
+stamp-*

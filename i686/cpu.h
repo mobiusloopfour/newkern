@@ -1,5 +1,5 @@
 #pragma once
 
-#include <nk/nk32.h>
+#include <stdint.h>
 
 uint32_t cpuini ();

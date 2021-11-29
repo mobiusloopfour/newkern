@@ -1,105 +1,21 @@
-m4_include(m4/acx.m4)
-m4_include(m4/elf.m4)
-
 AC_PREREQ([2.71])
 AC_INIT([Kernel],[0.1],[scratch.joint-0i@icloud.com])
-AC_CONFIG_SRCDIR(kern/main.c)
-AC_CONFIG_HEADERS(sys/config.h)
 
-# simple test
+AC_CANONICAL_BUILD
 
-AC_CHECK_PROG(CROSS_CHECK, [i686-elf-gcc i686-elf-none-gcc], yes)
-AS_IF([test x"$CROSS_CHECK" != x"yes"], [AC_MSG_ERROR([Please set up a cross compiler before configuring. (Didn't find i686 gcc)])])
-
-AC_CHECK_PROG(CROSS_CHECK_BINUTILS, [i686-elf-ld i686-elf-none-ld], yes)
-AS_IF([test x"$CROSS_CHECK_BINUTILS" != x"yes"], [AC_MSG_ERROR([Please set up a cross compiler before configuring. (Didn't find i686 binutils)])])
-
-AC_CHECK_PROG(MANGEN, [groff troff roff], yes)
-AS_IF([test x"$MANGEN" != x"yes"], [AC_MSG_ERROR([Please install groff])])
-
-# Find the build, host, and target systems.
-ACX_NONCANONICAL_BUILD
-ACX_NONCANONICAL_HOST
-ACX_NONCANONICAL_TARGET
-
-# Find the build, host, and target systems.
-AC_CANONICAL_TARGET
-AC_ARG_PROGRAM
-
-m4_pattern_allow([^AS_FOR_TARGET$])dnl
-m4_pattern_allow([^AS_FOR_BUILD$])dnl
-
-# Get 'install' or 'install-sh' and its variants.
-AC_PROG_INSTALL
-ACX_PROG_LN
-AC_PROG_LN_S
-AC_PROG_SED
-AC_PROG_AWK
-
-if test "${build}" != "${host}" ; then
-  AR_FOR_BUILD=${AR_FOR_BUILD-ar}
-  AS_FOR_BUILD=${AS_FOR_BUILD-as}
-  CC_FOR_BUILD=${CC_FOR_BUILD-gcc}
-  CXX_FOR_BUILD=${CXX_FOR_BUILD-g++}
-  GCJ_FOR_BUILD=${GCJ_FOR_BUILD-gcj}
-  GFORTRAN_FOR_BUILD=${GFORTRAN_FOR_BUILD-gfortran}
-  GOC_FOR_BUILD=${GOC_FOR_BUILD-gccgo}
-  LD_FOR_BUILD=${LD_FOR_BUILD-ld}
-  NM_FOR_BUILD=${NM_FOR_BUILD-nm}
-  RANLIB_FOR_BUILD=${RANLIB_FOR_BUILD-ranlib}
-else
-  AR_FOR_BUILD="\$(AR)"
-  AS_FOR_BUILD="\$(AS)"
-  CC_FOR_BUILD="\$(CC)"
-  CXX_FOR_BUILD="\$(CXX)"
-  GCJ_FOR_BUILD="\$(GCJ)"
-  GFORTRAN_FOR_BUILD="\$(GFORTRAN)"
-  GOC_FOR_BUILD="\$(GOC)"
-  LD_FOR_BUILD="\$(LD)"
-  NM_FOR_BUILD="\$(NM)"
-  RANLIB_FOR_BUILD="\$(RANLIB)"
-fi
-
-# Checks for programs.
-AC_PROG_CC
-AC_PROG_CXX
-
-m4_pattern_allow([^AS_FOR_TARGET$])dnl
-m4_pattern_allow([^AS_FOR_BUILD$])dnl
-
-# Build module lists & subconfigure args.
 AC_SUBST(build_configargs)
 AC_SUBST(build_configdirs)
 
-# Host module lists & subconfigure args.
-AC_SUBST(host_configargs)
-AC_SUBST(configdirs)
-AC_SUBST(target_configdirs)
+dnl Because we don't have a -lc
+LDFLAGS="-nostdlib"
+CFLAGS="-nostdlib -ffreestanding"
 
-# Target module lists & subconfigure args.
-AC_SUBST(target_configargs)
+AC_PROG_CC
+AC_PROG_CXX
+AM_PROG_AS
 
-NCN_STRICT_CHECK_TARGET_TOOLS(CC_FOR_TARGET, cc gcc)
-NCN_STRICT_CHECK_TARGET_TOOLS(CXX_FOR_TARGET, c++ g++ cxx gxx)
-NCN_STRICT_CHECK_TARGET_TOOLS(GCC_FOR_TARGET, gcc, ${CC_FOR_TARGET})
+dnl Want C99
 
-ACX_CHECK_INSTALLED_TARGET_TOOL(CPP_FOR_TARGET, cpp)
-ACX_CHECK_INSTALLED_TARGET_TOOL(AR_FOR_TARGET, ar)
-ACX_CHECK_INSTALLED_TARGET_TOOL(AS_FOR_TARGET, as)
-ACX_CHECK_INSTALLED_TARGET_TOOL(LD_FOR_TARGET, ld)
-ACX_CHECK_INSTALLED_TARGET_TOOL(LIPO_FOR_TARGET, lipo)
-ACX_CHECK_INSTALLED_TARGET_TOOL(NM_FOR_TARGET, nm)
-ACX_CHECK_INSTALLED_TARGET_TOOL(OBJDUMP_FOR_TARGET, objdump)
-ACX_CHECK_INSTALLED_TARGET_TOOL(OBJCOPY_FOR_TARGET, objcopy)
-ACX_CHECK_INSTALLED_TARGET_TOOL(RANLIB_FOR_TARGET, ranlib)
-ACX_CHECK_INSTALLED_TARGET_TOOL(READELF_FOR_TARGET, readelf)
-ACX_CHECK_INSTALLED_TARGET_TOOL(STRIP_FOR_TARGET, strip)
-
-# Checks for libraries.
-
-# Checks for header files.
-
-# Checks for typedefs, structures, and compiler characteristics.
 AC_C_INLINE
 AC_TYPE_INT16_T
 AC_TYPE_INT32_T
@@ -113,9 +29,85 @@ AC_TYPE_UINT32_T
 AC_TYPE_UINT64_T
 AC_TYPE_UINT8_T
 AC_CHECK_TYPES(size_t)
+AC_CONFIG_HEADERS([sys/config.h])
 
-# Checks for library functions.
-#AC_CHECK_FUNCS(memset)
+dnl Want all flags
 
-AC_CONFIG_FILES(Makefile)
+AX_CHECK_COMPILE_FLAG([-m32],
+  [AX_APPEND_FLAG([-m32])],
+  [AC_MSG_WARN([-m32 not supported])
+])
+
+AX_CHECK_COMPILE_FLAG([-march=i686],
+  [AX_APPEND_FLAG([-march=i686])],
+  [AC_MSG_WARN([-march=i686 not supported])
+])
+
+
+AX_CHECK_COMPILE_FLAG([-fno-builtin],
+  [AX_APPEND_FLAG([-fno-builtin])],
+  [AC_MSG_WARN([-fno-builtin not supported])
+])
+
+
+AX_CHECK_COMPILE_FLAG([-fstrength-reduce],
+  [AX_APPEND_FLAG([-fstrength-reduce])],
+  [AC_MSG_WARN([-fstrength-reduce not supported])
+])
+
+AX_CHECK_COMPILE_FLAG([-fomit-frame-pointer],
+  [AX_APPEND_FLAG([-fomit-frame-pointer])],
+  [AC_MSG_WARN([-fomit-frame-pointer not supported])
+])
+
+AX_CHECK_COMPILE_FLAG([-finline-functions],
+  [AX_APPEND_FLAG([-finline-functions])],
+  [AC_MSG_WARN([-finline-functions not supported])
+])
+
+AX_CHECK_COMPILE_FLAG([-nostdinc],
+  [AX_APPEND_FLAG([-nostdinc])],
+  [AC_MSG_WARN([-nostdinc not supported])
+])
+
+AX_CHECK_COMPILE_FLAG([-fno-stack-protector],
+  [AX_APPEND_FLAG([-fno-stack-protector])],
+  [AC_MSG_WARN([-fno-stack-protector not supported])
+])
+
+AX_CHECK_COMPILE_FLAG([-mno-red-zone],
+  [AX_APPEND_FLAG([-mno-red-zone])],
+  [AC_MSG_WARN([-mno-red-zone not supported])
+])
+
+
+AX_CHECK_COMPILE_FLAG([-fleading-underscore],
+  [AX_APPEND_FLAG([-fleading-underscore ])],
+  [AC_MSG_ERROR([-fleading-underscore  not supported])
+])
+
+AX_CHECK_COMPILE_FLAG([-ffreestanding],
+  [AX_APPEND_FLAG([-ffreestanding])],
+  [AC_MSG_WARN([-ffreestanding not supported])
+])
+
+AX_CHECK_COMPILE_FLAG([-nostdlib],
+  [AX_APPEND_FLAG([-nostdlib])],
+  [AC_MSG_WARN([-nostdlib not supported])
+])
+
+AC_CHECK_PROG(MANGEN, [groff troff roff], yes)
+AS_IF([test x"$MANGEN" != x"yes"], [AC_MSG_ERROR([`groff' or `troff' is needed to display interactive manpages])])
+
+AC_CHECK_PROG(QEMU, [qemu-system-x86_64], yes)
+AS_IF([test x"$QEMU" != x"yes"], [AC_MSG_ERROR([`qemu-system-*' for the target is needed to display interactive manpages])])
+
+AC_CHECK_PROG(MORE, [more], yes)
+AS_IF([test x"$MORE" != x"yes"], [AC_MSG_ERROR([`more' (the program) is needed to display interactive manpages])])
+
+AM_INIT_AUTOMAKE
+AC_CONFIG_FILES([
+    Makefile
+])
+
 AC_OUTPUT

@@ -1,0 +1,45 @@
+------------------------------------------------
+||                  NEWKERN                   ||
+
+    NewKern is on track to be a 100% free and open 
+source kernel. [1] To learn more, configure the build
+system, and type help-`topic`. Example topics could be:
+
+- `make help-arch`
+- `make help-external-headers`
+
+    Please keep in mind that the supplied documentation
+might be outdated.
+
+------------------------------------------------
+||                  BUILDING                  ||
+
+    To configure your build, run
+
+- `autoreconf -fi`
+- `./configure --host="<host>"`
+
+    Currently only the  `i686-elf`  or   `i686-none-elf` 
+host is supported.  You will need a cross compiler   for
+the build. If you haven't already, install `i686-elf-gcc`
+from your package manager, or build it   yourself.  You 
+should do this before running autoreconf.
+    All of this has been automated by running:
+
+- `sh gen.sh`
+
+After the configuration is finished, simply type:
+
+- `make`
+    
+and the kernel will be build in the root directory.
+It is a plain ELF file, which complies to multiboot 1.
+
+To run, type:
+
+- `make qemu`
+
+This will launch an emulator running just the kernel.
+
+================================================
+    [1] : Licensed under GPLv3-Or-Later.
