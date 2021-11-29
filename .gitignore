@@ -16,3 +16,5 @@ man/html
 autom4te.cache
 .vscode
 stamp-*
+aclocal.m4
+configure

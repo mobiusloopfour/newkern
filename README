@@ -16,6 +16,7 @@ might be outdated.
 
     To configure your build, run
 
+- `automake --add-missing`
 - `autoreconf -fi`
 - `./configure --host="<host>"`
 
