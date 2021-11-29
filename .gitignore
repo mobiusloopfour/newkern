@@ -1,5 +1,6 @@
 *.o
 *.dep
+.deps
 *~
 sys_kern
 *.sym
