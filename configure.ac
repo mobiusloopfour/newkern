@@ -96,6 +96,11 @@ AX_CHECK_COMPILE_FLAG([-nostdlib],
   [AC_MSG_WARN([-nostdlib not supported])
 ])
 
+AX_CHECK_COMPILE_FLAG([-std=gnu17],
+  [AX_APPEND_FLAG([-std=gnu17])],
+  [AC_MSG_WARN([-std=gnu17 not supported])
+])
+
 AC_CHECK_PROG(MANGEN, [groff troff roff], yes)
 AS_IF([test x"$MANGEN" != x"yes"], [AC_MSG_ERROR([`groff' or `troff' is needed to display interactive manpages])])
 

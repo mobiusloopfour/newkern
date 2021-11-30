@@ -1,5 +1,6 @@
 #include "idt.h"
 #include <string.h>
+#include "c-asm.h"
 
 idtdes_t idt[256];
 idtr_t idtr;
@@ -19,21 +20,16 @@ idtins ()
 /* default idt handler
  */
 void
-idtdef (void* a, int b)
+idtdef (void *a, int b)
 {
+    cli ();
 #ifndef NKRELEASE
     /* Don't use locale for this */
-    printf ("Unhandled interrupt\n");
+    printf ("");
 #endif
-    return;
-    while (1)
+    
+    for (;;)
         ;
-}
-
-void
-idtin0 ()
-{
-    asm volatile("int $0\n");
 }
 
 /* Install interrupt handler
@@ -47,7 +43,7 @@ idtinr (uint32_t i, uint16_t flags, uint16_t sel, irqhan_t irq)
     if (!irq)
         return 0;
 
-    uint64_t uinbas = (uint64_t) & (*irq);
+    uint64_t uinbas = (uint64_t)(&(*irq));
 
     idt[i].baslow = uinbas & 0xffff;
     idt[i].bashi = (uinbas >> 16) & 0xffff;
@@ -60,22 +56,18 @@ idtinr (uint32_t i, uint16_t flags, uint16_t sel, irqhan_t irq)
 
 /* initialize idt
  */
-int idtini (uint16_t csel) {
- 
-	/* set up idtr for processor */
-	idtr.limit = sizeof (idtdes_t) * 256 -1;
-	idtr.base	= (uint32_t)&idt[0];
- 
-	/* null out the idt */
-	memset ((void*)&idt[0], 0, sizeof (idtdes_t) * 256 - 1);
- 
-	/* register default handlers */
-	for (int i=0; i<256; i++)
-		idtinr (i, I86_IDT_DESC_PRESENT | I86_IDT_DESC_BIT32,
-			csel, (irqhan_t)idtdef);
- 
-	/* install our idt */
-	idtins ();
- 
-	return 0;
+int
+idtini (uint16_t csel)
+{
+
+    idtr.limit = sizeof (idtdes_t) * 256 - 1;
+    idtr.base = (uint32_t)&idt[0];
+
+    memset ((void *)&idt[0], 0, sizeof (idtdes_t) * 256 - 1);
+
+    for (int i = 0; i < 256; i++)
+        idtinr (i, IDT_DESC_PRESENT | IDT_DESC_BIT32, csel, (irqhan_t)idtdef);
+
+    idtins ();
+    return 0;
 }

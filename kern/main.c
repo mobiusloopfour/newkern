@@ -9,9 +9,7 @@ int
 kmain ()
 {
     halini ();
-    printf (strtab[GDT_LOADED]);
-    asm volatile ("int $10");
-    asm volatile ("int $0");
+    printf ("\n%s", strtab[KERNEL_LOADED]);
     while (1)
         ;
 }
