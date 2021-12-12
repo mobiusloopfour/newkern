@@ -1,1 +1,11 @@
-MobiusLoopFour
+While most of this is written by myself, I would like to
+give credit to Evan Teran for his higher half trampoline
+code.
+See: https://github.com/eteran/os64
+
+The trampoline code and some components of this project
+are Copyright (c) 2017 Evan Teran, licensed under the MIT
+license.
+
+The printf implementation is by Marco Paland.
+See printf.c

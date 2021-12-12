@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+rm -rf limine && \
+git clone https://github.com/limine-bootloader/limine.git --branch=v2.0-branch-binary --depth=1 || true && \
+make -C limine && \
+rm -rf build && \
+mkdir -p build && cd build && \
+cmake .. -DCMAKE_TOOLCHAIN_FILE=../cf/x86_64-gcc.cmake -G "Ninja"
