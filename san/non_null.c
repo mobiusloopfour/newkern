@@ -23,17 +23,17 @@
 #include "ubsan.h"
 #include <nkdef.h>
 
-void __ubsan_handle_nonnull_return(void* data_raw)
+void __ubsan_handle_nonnull_return(const void* data_raw)
 {
-    struct ubsan_nonnull_return_data* data = (struct ubsan_nonnull_return_data*)data_raw;
+    const struct ubsan_nonnull_return_data* data = (struct ubsan_nonnull_return_data*)data_raw;
     ubsan_abort(&data->location, "null return");
 }
 
-void __ubsan_handle_nonnull_arg(void* data_raw,
-    intptr_t index_raw)
+void __ubsan_handle_nonnull_arg(const void* data_raw,
+    const intptr_t index_raw)
 {
-    struct ubsan_nonnull_arg_data* data = (struct ubsan_nonnull_arg_data*)data_raw;
-    ubsan_value_handle_t index = (ubsan_value_handle_t)index_raw;
+    const struct ubsan_nonnull_arg_data* data = (const struct ubsan_nonnull_arg_data*)data_raw;
+    const ubsan_value_handle_t index = (const ubsan_value_handle_t)index_raw;
     (void)index;
     ubsan_abort(&data->location, "null argument");
 }

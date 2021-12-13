@@ -23,7 +23,7 @@
 #include "ubsan.h"
 
 __attribute__((noreturn))
-void __ubsan_handle_builtin_unreachable(void* data_raw)
+void __ubsan_handle_builtin_unreachable(const void* data_raw)
 {
 	struct ubsan_unreachable_data* data =
 		(struct ubsan_unreachable_data*) data_raw;

@@ -22,14 +22,13 @@
 
 #include "ubsan.h"
 
-__attribute__((noreturn))
-void __ubsan_handle_shift_out_of_bounds(void* data_raw,
-    void* lhs_raw,
-    void* rhs_raw)
+__attribute__((noreturn)) void __ubsan_handle_shift_out_of_bounds(const void* data_raw,
+    const void* lhs_raw,
+    const void* rhs_raw)
 {
-    struct ubsan_shift_out_of_bounds_data* data = (struct ubsan_shift_out_of_bounds_data*)data_raw;
-    ubsan_value_handle_t lhs = (ubsan_value_handle_t)lhs_raw;
-    ubsan_value_handle_t rhs = (ubsan_value_handle_t)rhs_raw;
+    const struct ubsan_shift_out_of_bounds_data* data = (const struct ubsan_shift_out_of_bounds_data*)data_raw;
+    const ubsan_value_handle_t lhs = (ubsan_value_handle_t)lhs_raw;
+    const ubsan_value_handle_t rhs = (ubsan_value_handle_t)rhs_raw;
     (void)lhs;
     (void)rhs;
     ubsan_abort(&data->location, "shift out of bounds");

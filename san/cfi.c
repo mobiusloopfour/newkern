@@ -22,11 +22,11 @@
 
 #include "ubsan.h"
 
-void __ubsan_handle_cfi_bad_icall(void* data_raw,
-    void* value_raw)
+void __ubsan_handle_cfi_bad_icall(const void* data_raw,
+    const void* value_raw)
 {
-    struct ubsan_cfi_bad_icall_data* data = (struct ubsan_cfi_bad_icall_data*)data_raw;
-    ubsan_value_handle_t value = (ubsan_value_handle_t)value_raw;
+    const struct ubsan_cfi_bad_icall_data* data = (const struct ubsan_cfi_bad_icall_data*)data_raw;
+    const ubsan_value_handle_t value = (const ubsan_value_handle_t)value_raw;
     (void)value;
     ubsan_abort(&data->location,
         "control flow integrity check failure during indirect call");

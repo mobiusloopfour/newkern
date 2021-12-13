@@ -26,12 +26,13 @@
 #include "multiboot.h"
 #include "nkdef.h"
 #include "printf.h"
+#include "hal.h"
 
-void kmain(unsigned long magic, unsigned long mbi)
+void kmain(const uint64_t magic, const uintptr_t mbi)
 {
     (void)mbi;
     vga_clear(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
     digest_multiboot(magic, mbi);
-    
-    printf(0);
+
+    hal_shutdown();
 }

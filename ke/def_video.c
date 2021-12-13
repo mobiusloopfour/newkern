@@ -30,30 +30,30 @@
 #define START 0
 
 static uint16_t current_width = START, current_height = 0;
-static volatile uintptr_t raw_buffer = P2V(0x000b8000);
+const static volatile uintptr_t raw_buffer = P2V(0x000b8000);
 static uint8_t color;
 
-static uint8_t
-mk_color(enum basic_color_t fg, enum basic_color_t bg)
+const static uint8_t
+mk_color(const enum basic_color_t fg, const enum basic_color_t bg)
 {
     return fg | bg << 4;
 }
 
-static uint16_t
-mk_entry(uint8_t character, uint8_t color)
+const static uint16_t
+mk_entry(const uint8_t character, const uint8_t color)
 {
     return (uint16_t)character | (uint16_t)color << 8;
 }
 
 static void
-put_entry(uint8_t c, uint8_t color, uint64_t x, uint64_t y)
+put_entry(const uint8_t c, const uint8_t color, const uint64_t x, const uint64_t y)
 {
     const uint64_t index = y * 80 + x;
     ((uint16_t*)raw_buffer)[index] = mk_entry(c, color);
 }
 
 static void
-scroll(uint64_t line)
+scroll(const uint64_t line)
 {
     uintptr_t loop;
     uint8_t c;
@@ -77,10 +77,10 @@ del_last(void)
 }
 
 static inline void
-do_putchar(char c, char normal)
+do_putchar(const char c, const _Bool normal)
 {
     uint64_t line;
-    uint8_t uc = c;
+    const uint8_t uc = c;
     uint8_t entry;
 
     if (c == '\0') {
@@ -92,7 +92,7 @@ do_putchar(char c, char normal)
     else
         entry = mk_color(VGA_COLOR_WHITE, VGA_COLOR_RED);
 
-    if (c == '\n' || c == '\n') {
+    if (c == '\n' || c == '\r') {
         current_height++;
         current_width = 0;
     } else {
@@ -144,7 +144,7 @@ void vga_err(const char* str)
     do_puts(str, 0);
 }
 
-void vga_clear(enum basic_color_t fg, basic_color_t bg)
+void vga_clear(const enum basic_color_t fg, const basic_color_t bg)
 {
     uint64_t y, x;
 
@@ -158,7 +158,7 @@ void vga_clear(enum basic_color_t fg, basic_color_t bg)
 }
 
 /* for tinyprintf */
-void _putchar(char c)
+void _putchar(const char c)
 {
     putchar(c);
 }
@@ -171,7 +171,7 @@ void vga_init(void)
     printf_("\n");
 }
 
-void vga_set_color(enum basic_color_t fg, enum basic_color_t bg)
+void vga_set_color(const enum basic_color_t fg, const enum basic_color_t bg)
 {
     color = mk_color(fg, bg);
 }

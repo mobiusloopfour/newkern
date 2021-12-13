@@ -23,11 +23,11 @@
 #include "ubsan.h"
 
 __attribute__((noreturn))
-void __ubsan_handle_out_of_bounds(void* data_raw,
-    void* index_raw)
+void __ubsan_handle_out_of_bounds(const void* data_raw,
+    const void* index_raw)
 {
-    struct ubsan_out_of_bounds_data* data = (struct ubsan_out_of_bounds_data*)data_raw;
-    ubsan_value_handle_t index = (ubsan_value_handle_t)index_raw;
+    const struct ubsan_out_of_bounds_data* data = (const struct ubsan_out_of_bounds_data*)data_raw;
+    const ubsan_value_handle_t index = (const ubsan_value_handle_t)index_raw;
     (void)index;
     ubsan_abort(&data->location, "out of bounds");
 }

@@ -46,7 +46,7 @@ typedef enum basic_color_t {
 
 typedef char console_t;
 
-void vga_clear(enum basic_color_t fg, enum basic_color_t bg);
+void vga_clear(const enum basic_color_t fg, const enum basic_color_t bg);
 
 typedef struct {
     char fg;
@@ -60,10 +60,10 @@ typedef struct {
     unsigned int id;
 } vga_init_info_t;
 
-void vga_puts(const char* _Nonnull str);
-void vga_err(const char* _Nonnull str);
-void vga_clear(enum basic_color_t fg, basic_color_t bg);
+void vga_puts(const char* str);
+void vga_err(const char* str);
+void vga_clear(const enum basic_color_t fg, const enum basic_color_t bg);
 void vga_init(void);
-void vga_set_color(enum basic_color_t fg, enum basic_color_t bg);
+void vga_set_color(const enum basic_color_t fg, const enum basic_color_t bg);
 
 #endif /* DEF_VIDEO_H_ */

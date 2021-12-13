@@ -24,11 +24,11 @@
 #include <kd.h>
 
 __attribute__((noreturn))
-void __ubsan_handle_negate_overflow(void* data_raw,
-    void* old_value_raw)
+void __ubsan_handle_negate_overflow(const void* data_raw,
+    const void* old_value_raw)
 {
-    struct ubsan_overflow_data* data = (struct ubsan_overflow_data*)data_raw;
-    ubsan_value_handle_t old_value = (ubsan_value_handle_t)old_value_raw;
+    const struct ubsan_overflow_data* data = (const struct ubsan_overflow_data*)data_raw;
+    const ubsan_value_handle_t old_value = (const ubsan_value_handle_t)old_value_raw;
     (void)old_value;
     ubsan_abort(&data->location, "negation overflow");
 }

@@ -25,9 +25,8 @@
 #include "kd.h"
 
 __attribute__((noreturn)) void
-panic(const char* _Nonnull  reason)
+panic(const char* reason)
 {
-    uint8_t color;
     vga_clear(VGA_COLOR_WHITE, VGA_COLOR_RED);
     kd_errln(reason);
     hal_shutdown();

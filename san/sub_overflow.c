@@ -24,9 +24,9 @@
 #include <kd.h>
 
 __attribute__((noreturn))
-void __ubsan_handle_sub_overflow(void* data_raw,
-    void* lhs_raw,
-    void* rhs_raw)
+void __ubsan_handle_sub_overflow(const void* data_raw,
+    const void* lhs_raw,
+    const void* rhs_raw)
 {
     struct ubsan_overflow_data* data = (struct ubsan_overflow_data*)data_raw;
     ubsan_value_handle_t lhs = (ubsan_value_handle_t)lhs_raw;

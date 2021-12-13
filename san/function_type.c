@@ -22,11 +22,11 @@
 
 #include "ubsan.h"
 
-void __ubsan_handle_function_type_mismatch(void* data_raw,
-    void* value_raw)
+void __ubsan_handle_function_type_mismatch(const void* data_raw,
+    const void* value_raw)
 {
-    struct ubsan_function_type_mismatch_data* data = (struct ubsan_function_type_mismatch_data*)data_raw;
-    ubsan_value_handle_t value = (ubsan_value_handle_t)value_raw;
+    const struct ubsan_function_type_mismatch_data* data = (const struct ubsan_function_type_mismatch_data*)data_raw;
+    const ubsan_value_handle_t value = (const ubsan_value_handle_t)value_raw;
     (void)value;
     ubsan_abort(&data->location, "function type mismatch");
 }

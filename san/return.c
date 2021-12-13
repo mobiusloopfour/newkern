@@ -22,8 +22,8 @@
 
 #include "ubsan.h"
 
-__attribute__((noreturn)) void __ubsan_handle_missing_return(void* data_raw)
+__attribute__((noreturn)) void __ubsan_handle_missing_return(const void* data_raw)
 {
-    struct ubsan_unreachable_data* data = (struct ubsan_unreachable_data*)data_raw;
+    const struct ubsan_unreachable_data* data = (const struct ubsan_unreachable_data*)data_raw;
     ubsan_abort(&data->location, "missing return");
 }

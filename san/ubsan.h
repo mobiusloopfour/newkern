@@ -107,6 +107,6 @@ struct ubsan_cfi_bad_icall_data {
 
 typedef uintptr_t ubsan_value_handle_t;
 
-__attribute__((noreturn)) void ubsan_abort(struct ubsan_source_location* location, const char* violation);
+__attribute__((noreturn)) void ubsan_abort(const struct ubsan_source_location* location, const char* violation);
 
 #endif /* UBSAN_H_ */
