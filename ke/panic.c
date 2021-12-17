@@ -20,7 +20,6 @@
  *
  */
 
-#include "tty.h"
 #include "hal.h"
 #include "kd.h"
 

@@ -31,5 +31,5 @@ uint8_t // error code
 kmain(void)
 {
     printf("Hello, world\n");
-    return 9;
+    return 0;
 }

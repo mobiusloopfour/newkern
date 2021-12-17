@@ -21,7 +21,6 @@
  */
 
 #include "hal.h"
-#include "tty.h"
 #include "kd.h"
 #include "nkdef.h"
 #include "offsets.h"
