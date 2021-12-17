@@ -134,17 +134,20 @@ do_puts(const char* str, char normal)
     } while (*str++);
 }
 
-void vga_puts(const char* str)
+void
+vga_puts(const char* str)
 {
     do_puts(str, 1);
 }
 
-void vga_err(const char* str)
+void
+vga_err(const char* str)
 {
     do_puts(str, 0);
 }
 
-void vga_clear(const enum basic_color_t fg, const basic_color_t bg)
+void
+vga_clear(const enum basic_color_t fg, const basic_color_t bg)
 {
     uint64_t y, x;
 
@@ -158,12 +161,14 @@ void vga_clear(const enum basic_color_t fg, const basic_color_t bg)
 }
 
 /* for tinyprintf */
-void _putchar(const char c)
+void
+_putchar(const char c)
 {
     putchar(c);
 }
 
-void vga_init(void)
+void
+vga_init(void)
 {
     current_width = 0;
     current_height = 0;
@@ -171,7 +176,8 @@ void vga_init(void)
     printf_("\n");
 }
 
-void vga_set_color(const enum basic_color_t fg, const enum basic_color_t bg)
+void
+vga_set_color(const enum basic_color_t fg, const enum basic_color_t bg)
 {
     color = mk_color(fg, bg);
 }

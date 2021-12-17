@@ -20,14 +20,14 @@
  *
  */
 
-#include "def_video.h"
+#include "tty.h"
 #include "hal.h"
 #include "kd.h"
 
 __attribute__((noreturn)) void
 panic(const char* reason)
 {
-    vga_clear(VGA_COLOR_WHITE, VGA_COLOR_RED);
+    //vga_clear(VGA_COLOR_WHITE, VGA_COLOR_RED);
     kd_errln(reason);
     hal_shutdown();
 }

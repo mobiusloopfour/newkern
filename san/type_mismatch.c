@@ -22,7 +22,8 @@
 
 #include "ubsan.h"
 
-__attribute__((noreturn)) void __ubsan_handle_type_mismatch(const void* data_raw,
+__attribute__((noreturn)) void
+__ubsan_handle_type_mismatch(const void* data_raw,
     const void* pointer_raw)
 {
     struct ubsan_type_mismatch_data* data = (struct ubsan_type_mismatch_data*)data_raw;
@@ -36,7 +37,8 @@ __attribute__((noreturn)) void __ubsan_handle_type_mismatch(const void* data_raw
 }
 
 // yeah, it's the same
-__attribute__((noreturn)) void __ubsan_handle_type_mismatch_v1(void* data_raw,
+__attribute__((noreturn)) void
+__ubsan_handle_type_mismatch_v1(void* data_raw,
     void* pointer_raw)
 {
     struct ubsan_type_mismatch_data* data = (struct ubsan_type_mismatch_data*)data_raw;

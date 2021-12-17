@@ -25,8 +25,8 @@
 #include <kd.h>
 #include <nkdef.h>
 
-__attribute__((noreturn))
-void ubsan_abort(const struct ubsan_source_location* location, const char* violation)
+__attribute__((noreturn)) void
+ubsan_abort(const struct ubsan_source_location* location, const char* violation)
 {
     kd_errln(violation);
     kd_err("\nfile: %s\nline: %i\ncolumn: %i\n",

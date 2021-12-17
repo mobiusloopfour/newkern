@@ -20,18 +20,13 @@
  *
  */
 
-#include "ubsan.h"
-#include <kd.h>
+#include "kd.h"
 
-__attribute__((noreturn)) void
-__ubsan_handle_divrem_overflow(const void* data_raw,
-    const void* lhs_raw,
-    const void* rhs_raw)
+__attribute__((noreturn)) void hal_shutdown(void)
 {
-    const struct ubsan_overflow_data* data = (const struct ubsan_overflow_data*)data_raw;
-    const ubsan_value_handle_t lhs = (const ubsan_value_handle_t)lhs_raw;
-    const ubsan_value_handle_t rhs = (const ubsan_value_handle_t)rhs_raw;
-    (void)lhs;
-    (void)rhs;
-    ubsan_abort(&data->location, "division remainder overflow");
+    kd_logln("Shutting down...");
+    for (;;)
+        __asm__ volatile(
+            "cli\n"
+            "hlt\n");
 }

@@ -22,10 +22,9 @@
 
 #include "ubsan.h"
 
-__attribute__((noreturn))
-void __ubsan_handle_builtin_unreachable(const void* data_raw)
+__attribute__((noreturn)) void
+__ubsan_handle_builtin_unreachable(const void* data_raw)
 {
-	struct ubsan_unreachable_data* data =
-		(struct ubsan_unreachable_data*) data_raw;
-	ubsan_abort(&data->location, "reached unreachable");
+    struct ubsan_unreachable_data* data = (struct ubsan_unreachable_data*)data_raw;
+    ubsan_abort(&data->location, "reached unreachable");
 }

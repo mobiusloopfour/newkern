@@ -22,7 +22,8 @@
 
 #include "ubsan.h"
 
-void __ubsan_handle_cfi_bad_icall(const void* data_raw,
+void
+__ubsan_handle_cfi_bad_icall(const void* data_raw,
     const void* value_raw)
 {
     const struct ubsan_cfi_bad_icall_data* data = (const struct ubsan_cfi_bad_icall_data*)data_raw;

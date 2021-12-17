@@ -21,10 +21,22 @@
  */
 
 #include "kd.h"
+#include <hal.h>
 
-__attribute__((noreturn)) void hal_shutdown(void)
+__attribute__((noreturn)) void
+hal_shutdown(void)
 {
     kd_logln("Shutting down...");
+
+    /* emulators -- qemu */
+    hal_outw(0x604, 0x2000);
+
+    /* emulators -- vbox */
+    hal_outw(0x4004, 0x3400);
+
+    /* emulators -- qemu and bochs */
+    hal_outw(0xB004, 0x2000);
+
     for (;;)
         __asm__ volatile(
             "cli\n"

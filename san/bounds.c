@@ -22,8 +22,8 @@
 
 #include "ubsan.h"
 
-__attribute__((noreturn))
-void __ubsan_handle_out_of_bounds(const void* data_raw,
+__attribute__((noreturn)) void
+__ubsan_handle_out_of_bounds(const void* data_raw,
     const void* index_raw)
 {
     const struct ubsan_out_of_bounds_data* data = (const struct ubsan_out_of_bounds_data*)data_raw;

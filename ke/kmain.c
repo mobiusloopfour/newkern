@@ -1,4 +1,3 @@
-#include "def_video.h"
 /*
  * Copyright (c) 2021 MobiusLoopFour. All rights reserved.
  *
@@ -21,18 +20,16 @@
  *
  */
 
+#include "hal.h"
 #include "kd.h"
 #include "krnl.h"
 #include "multiboot.h"
 #include "nkdef.h"
 #include "printf.h"
-#include "hal.h"
 
-void kmain(const uint64_t magic, const uintptr_t mbi)
+uint8_t // error code
+kmain(void)
 {
-    (void)mbi;
-    vga_clear(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
-    digest_multiboot(magic, mbi);
-
-    hal_shutdown();
+    printf("Hello, world\n");
+    return 9;
 }

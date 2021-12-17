@@ -23,10 +23,10 @@
 #ifndef KD_H_
 #define KD_H_
 
-int kd_log(const char* format, ...);
-int kd_logln(const char*  str);
-int kd_err(const char*  str, ...);
-int kd_errln(const char*  str);
+int kd_log(const char* str, ...);
+int kd_err(const char* str, ...);
+int kd_logln(const char* str);
+int kd_errln(const char* str);
 __attribute__((noreturn)) void panic(const char* reason);
 
 #endif /* KD_H_ */

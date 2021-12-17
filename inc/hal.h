@@ -23,6 +23,26 @@
 #ifndef HAL_H_
 #define HAL_H_
 
+#include <nkdef.h>
+
+typedef enum hal_tty_color {
+    HAL_COLOR_RESET,
+    HAL_COLOR_BLACK,
+    HAL_COLOR_RED,
+    HAL_COLOR_GREEN,
+    HAL_COLOR_ORANGE,
+    HAL_COLOR_BLUE,
+    HAL_COLOR_CYAN,
+    HAL_COLOR_MAGENTA,
+    HAL_COLOR_LIGHT_GRAY
+} hal_tty_color_t;
+
 __attribute__((noreturn)) void hal_shutdown(void);
+void hal_putchar(char c);
+void hal_tty_set_color(hal_tty_color_t foreground, hal_tty_color_t background);
+
+uint8_t hal_inb(uint16_t port);
+void hal_outw(uint16_t port, uint16_t data);
+uint8_t hal_inb(uint16_t port);
 
 #endif /* HAL_H_ */

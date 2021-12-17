@@ -6,8 +6,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 set(SOURCE_FILES
 	"ke/kmain.c"
 	"ke/panic.c"
-	"ke/def_video.c"
-	"ke/digmb.c"
 	"ke/printf.c"
 	"kd64/stty.c"
 )
@@ -34,8 +32,10 @@ set(UBSAN_SRC
 
 set(SOURCE_FILES
 	"${SOURCE_FILES}"
-	"hals/hal${ARCH}/boot.S"
+	"hals/hal${ARCH}/boot.c"
 	"hals/hal${ARCH}/conflow.c"
+	"hals/hal${ARCH}/stvl_tty.c"
+	"hals/hal${ARCH}/llio.c"
 )
 
 include_directories(
@@ -51,7 +51,7 @@ add_library(ubsan ${UBSAN_SRC})
 target_link_libraries(FreeKernel.elf PUBLIC ubsan)
 
 add_custom_command(OUTPUT ${CMAKE_SOURCE_DIR}/disk.iso
-  COMMAND rm -rf bin || true
+  	COMMAND rm -rf bin || true
 	COMMAND mkdir -p ${CMAKE_SOURCE_DIR}/bin
 	COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/FreeKernel.elf ${CMAKE_SOURCE_DIR}/cf/limine.cfg ${CMAKE_SOURCE_DIR}/limine/limine.sys ${CMAKE_SOURCE_DIR}/limine/limine-cd.bin ${CMAKE_SOURCE_DIR}/limine/limine-eltorito-efi.bin ${CMAKE_SOURCE_DIR}/bin/
 	COMMAND xorriso -as mkisofs -b limine-cd.bin -no-emul-boot -boot-load-size 4 -boot-info-table --efi-boot limine-eltorito-efi.bin -efi-boot-part --efi-boot-image --protective-msdos-label ${CMAKE_SOURCE_DIR}/bin -o ${CMAKE_SOURCE_DIR}/disk.iso

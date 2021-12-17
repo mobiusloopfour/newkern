@@ -1,78 +1,54 @@
+/* Tell the linker that we want an x86_64 ELF64 output file */
 OUTPUT_FORMAT(elf64-x86-64)
+OUTPUT_ARCH(i386:x86-64)
 
-KERNEL_LMA = 0x0000000000200000; /* 2 MEG */
-KERNEL_VMA = 0xffffffff80000000 + KERNEL_LMA;
+/* We want the symbol _start to be our entry point */
+ENTRY(_start)
 
-ENTRY(bootstrap)
+/* Define the program headers we want so the bootloader gives us the right */
+/* MMU permissions */
+PHDRS
+{
+    null    PT_NULL    FLAGS(0) ;                   /* Null segment */
+    text    PT_LOAD    FLAGS((1 << 0) | (1 << 2)) ; /* Execute + Read */
+    rodata  PT_LOAD    FLAGS((1 << 2)) ;            /* Read only */
+    data    PT_LOAD    FLAGS((1 << 1) | (1 << 2)) ; /* Write + Read */
+}
 
-SECTIONS {
-	. = KERNEL_VMA;
+SECTIONS
+{
+    /* We wanna be placed in the topmost 2GiB of the address space, for optimisations */
+    /* and because that is what the stivale2 spec mandates. */
+    /* Any address in this region will do, but often 0xffffffff80000000 is chosen as */
+    /* that is the beginning of the region. */
+    . = 0xffffffff80000000;
 
-	_start = .;
-	.text : AT(ADDR(.text) - KERNEL_VMA) {
-		_code = .;
-		KEEP(*(multiboot))
-		*(.text*)
-		*(.gnu.linkonce.t*)
-		. = ALIGN(0x1000);
-	}
+    .text : {
+        *(.text*)
+    } :text
 
-	.rodata : AT(ADDR(.rodata) - KERNEL_VMA) {
-		_rodata = .;
-		*(.rodata*)
-		*(.gnu.linkonce.r*)
+    /* Move to the next memory page for .rodata */
+    . += CONSTANT(MAXPAGESIZE);
 
-		. = ALIGN(8);
-		__CTOR_LIST__ = .;
-		*(.ctors)
-		__CTOR_END__ = .;
-		
-		. = ALIGN(8);
-		__DTOR_LIST__ = .;
-		*(.dtors)
-		__DTOR_END__ = .;
-		
-		. = ALIGN(8);
-		__INIT_LIST__ = .;
-		KEEP (*(.init_array))
-		__INIT_END__ = .;
-		
-		. = ALIGN(8);
-		__FINI_LIST__ = .;
-		KEEP (*(.fini_array))
-		__FINI_END__ = .;
+    /* We place the .stivale2hdr section containing the header in its own section, */
+    /* and we use the KEEP directive on it to make sure it doesn't get discarded. */
+    .stivale2hdr : {
+        KEEP(*(.stivale2hdr))
+    } :rodata
 
-		. = ALIGN(0x1000);
-	}
+    .rodata : {
+        *(.rodata*)
+    } :rodata
 
-	.data : AT(ADDR(.data) - KERNEL_VMA) {
-		_data = .;
-		*(.data*)
-		*(.gnu.linkonce.d*)
-		. = ALIGN(0x1000);
-	}
+    /* Move to the next memory page for .data */
+    . += CONSTANT(MAXPAGESIZE);
 
-	.eh_frame : AT(ADDR(.eh_frame) - KERNEL_VMA) {
-		_eh_frame = .;
-		*(.eh_frame)
-		*(.eh_frame_hdr)
-		. = ALIGN(0x1000);
-	}
+    .data : {
+        *(.data*)
+    } :data
 
-	_edata = .;
-	
-	.bss : AT(ADDR(.bss) - KERNEL_VMA) {
-		_bss = .;
-		*(.bss*)
-		*(.gnu.linkonce.b*)
-		*(COMMON)
-		. = ALIGN(0x1000);
-	}
-	
-	_end = .;
-
-	/DISCARD/ : {
-		*(.comment)
-		*(note.*)
-	}
+    .bss : {
+        *(COMMON)
+        *(.bss*)
+    } :data
 }

@@ -22,7 +22,8 @@
 
 #include "ubsan.h"
 
-void __ubsan_handle_float_cast_overflow(const void* data_raw,
+void
+__ubsan_handle_float_cast_overflow(const void* data_raw,
     const void* from_raw)
 {
     struct ubsan_float_cast_overflow_data* data = (struct ubsan_float_cast_overflow_data*)data_raw;

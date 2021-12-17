@@ -24,7 +24,8 @@
 #include "hal.h"
 #include "multiboot.h"
 
-int digest_multiboot(const uint64_t magic, const uint64_t mbi)
+int
+digest_multiboot(const uint64_t magic, const uint64_t mbi)
 {
     (void)mbi;
 

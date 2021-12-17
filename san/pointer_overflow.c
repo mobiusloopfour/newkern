@@ -22,7 +22,8 @@
 
 #include "ubsan.h"
 
-void __ubsan_handle_pointer_overflow(const void* data_raw)
+void
+__ubsan_handle_pointer_overflow(const void* data_raw)
 {
     const struct ubsan_nonnull_return_data* data = (const struct ubsan_nonnull_return_data*)data_raw;
     ubsan_abort(&data->location, "pointer overflow");

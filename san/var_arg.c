@@ -22,7 +22,8 @@
 
 #include "ubsan.h"
 
-void __ubsan_handle_vla_bound_not_positive(void* data_raw,
+void
+__ubsan_handle_vla_bound_not_positive(void* data_raw,
     void* bound_raw)
 {
     struct ubsan_vla_bound_data* data = (struct ubsan_vla_bound_data*)data_raw;

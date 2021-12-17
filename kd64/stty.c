@@ -20,21 +20,23 @@
  *
  */
 
-#include "def_video.h"
+#include "hal.h"
+#include "tty.h"
+#include "kd.h"
 #include "nkdef.h"
 #include "offsets.h"
-#include "kd.h"
-#include "stdarg.h"
 #include "printf.h"
+#include "stdarg.h"
 
 extern int evil_printf_(const char str[], ...);
 
-int kd_log(const char* format, ...)
+int
+kd_log(const char* format, ...)
 {
     va_list va;
     va_start(va, format);
     char buffer[1];
-    const int ret = vprintf_(format, va);
+    const int ret = vprintf(format, va);
     va_end(va);
     return ret;
 }
@@ -47,24 +49,30 @@ void kd_log(const char* str, ...)
 
 #endif
 
-int kd_err(const char* format, ...)
+int
+kd_err(const char* format, ...)
 {
-    vga_set_color(VGA_COLOR_WHITE, VGA_COLOR_RED);
+    printf("\n");
+    hal_tty_set_color(HAL_COLOR_LIGHT_GRAY, HAL_COLOR_RED);
     va_list va;
     va_start(va, format);
     char buffer[1];
-    const int ret = vprintf_(format, va);
+    const int ret = vprintf(format, va);
     va_end(va);
-    vga_set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
+    hal_tty_set_color(HAL_COLOR_RESET, HAL_COLOR_RESET);
     return ret;
 }
 
-int kd_errln(const char* str)
+int
+kd_errln(const char* str)
 {
-    return kd_err("\n[*] %s\n", str);
+    int r = kd_err("\n[*] %s", str);
+    printf("\n");
+    return r;
 }
 
-int kd_logln(const char* str)
+int
+kd_logln(const char* str)
 {
     return kd_log("\n[*] %s\n", str);
 }

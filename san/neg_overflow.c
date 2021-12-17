@@ -23,8 +23,8 @@
 #include "ubsan.h"
 #include <kd.h>
 
-__attribute__((noreturn))
-void __ubsan_handle_negate_overflow(const void* data_raw,
+__attribute__((noreturn)) void
+__ubsan_handle_negate_overflow(const void* data_raw,
     const void* old_value_raw)
 {
     const struct ubsan_overflow_data* data = (const struct ubsan_overflow_data*)data_raw;

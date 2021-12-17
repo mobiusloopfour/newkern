@@ -23,8 +23,8 @@
 #include "ubsan.h"
 #include <kd.h>
 
-__attribute__((noreturn))
-void __ubsan_handle_sub_overflow(const void* data_raw,
+__attribute__((noreturn)) void
+__ubsan_handle_sub_overflow(const void* data_raw,
     const void* lhs_raw,
     const void* rhs_raw)
 {

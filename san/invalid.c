@@ -22,7 +22,8 @@
 
 #include "ubsan.h"
 
-void __ubsan_handle_load_invalid_value(const void* data_raw,
+void
+__ubsan_handle_load_invalid_value(const void* data_raw,
     const void* value_raw)
 {
     const struct ubsan_invalid_value_data* data = (const struct ubsan_invalid_value_data*)data_raw;

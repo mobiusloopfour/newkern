@@ -45,4 +45,6 @@ typedef int64_t ptrdiff_t;
 typedef int64_t intptr_t;
 typedef uint64_t intmax_t;
 
+#define NULL ((void*)0)
+
 #endif /* NKDEF_H_ */

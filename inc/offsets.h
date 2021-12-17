@@ -26,7 +26,8 @@
 #define KERNEL_VMA 0xffffffff80000000
 
 #ifndef ASM
-#define P2V(x) KERNEL_VMA + x
+#define P2V(x) (KERNEL_VMA + (x))
+#define V2P(x) (KERNEL_VMA - (x))
 #endif
 
 #endif
