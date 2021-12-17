@@ -9,6 +9,7 @@ Right now not so many:
 - runtime undefined behavior checking
 - higher half (-2GB) 64 bit kernel
 - multiboot 1 compliant
+- stivale 2 compliant
 
 Tbd:
 
