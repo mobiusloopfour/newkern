@@ -1,0 +1,25 @@
+- $0: Divide by zero
+- $1 Debug Exception
+- $2 Non-Maskable-Interrupt
+- $3 Breakpoint Exception (INT 3)
+- $4 Overflow Exception (INTO instruction)
+- $5 Bound-Range Exception (BOUND instruction)
+- $6 Invalid-Opcode Exception
+- $7 Device-Not-Available Exception
+- $8 Double-Fault Exception
+- $9 Coprocessor-Segment-Overrun Exception (reserved in AMD64)
+- $a Invalid-TSS Exception
+- $b Segment-Not-Present Exception
+- $c Stack Exception
+- $d General-Protection Exception
+- $e Page-Fault Exception
+- $f (Reserved)
+- $10 x87 Floating-Point Exception
+- $11 Alignment-Check Exception
+- $12 Machine-Check Exception
+- $13 SIMD Floating-Point Exception
+- $14 Control-Protection Exception
+- $0-$ff Interrupt Instructions
+- $0–$ff Hardware Maskable Interrupts
+
+See: https://www.amd.com/system/files/TechDocs/24593.pdf
