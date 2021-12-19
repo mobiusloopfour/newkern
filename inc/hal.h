@@ -45,4 +45,6 @@ uint8_t hal_inb(uint16_t port);
 void hal_outw(uint16_t port, uint16_t data);
 uint8_t hal_inb(uint16_t port);
 
+extern int hal_check_features(void);
+
 #endif /* HAL_H_ */

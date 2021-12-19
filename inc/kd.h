@@ -29,4 +29,8 @@ int kd_logln(const char* str);
 int kd_errln(const char* str);
 __attribute__((noreturn)) void panic(const char* reason);
 
+typedef enum kd_err {
+    KD_ERR_APIC = (-1),
+} kd_err_t;
+
 #endif /* KD_H_ */

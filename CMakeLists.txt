@@ -33,6 +33,7 @@ set(UBSAN_SRC
 set(SOURCE_FILES
 	"${SOURCE_FILES}"
 	"hals/hal${ARCH}/boot.c"
+	"hals/hal${ARCH}/id.S"
 	"hals/hal${ARCH}/conflow.c"
 	"hals/hal${ARCH}/stvl_tty.c"
 	"hals/hal${ARCH}/llio.c"

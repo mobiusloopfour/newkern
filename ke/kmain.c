@@ -30,6 +30,15 @@
 uint8_t // error code
 kmain(void)
 {
-    printf("Hello, world\n");
+    /* check if there is a missing
+     * feature and return it's error
+     * code to the hal, exiting the
+     * kernel */
+    uint8_t x;
+    if ((x = hal_check_features())) {
+        return x;
+    }
+
+    kd_log("Hello, world");
     return 0;
 }

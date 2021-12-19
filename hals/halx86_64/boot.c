@@ -3,6 +3,7 @@
 #include <hal.h>
 #include <nkdef.h>
 #include <printf.h>
+#include <kd.h>
 
 /* too little code to make a header for this */
 extern uint8_t kmain(void);
@@ -78,6 +79,21 @@ stivale2_get_tag(stivale2_struct_t* stivale2_struct, uint64_t id)
 
         current_tag = (void*)current_tag->next;
     }
+}
+
+extern uint64_t hal_cpuid(void);
+
+int 
+hal_check_features(void)
+{
+    if (hal_cpuid() & (1 << 9)) {
+        kd_logln("Have APIC");
+    } else {
+        kd_errln("No APIC support detected. Returning...");
+        return -1;
+    }
+
+    return 0; // success
 }
 
 void
